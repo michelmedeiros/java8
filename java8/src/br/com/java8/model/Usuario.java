@@ -1,10 +1,21 @@
 package br.com.java8.model;
 
+/**
+ * @author michel
+ *
+ */
 public class Usuario {
 	
 	private String nome;
 	private int pontos;
 	private boolean moderador;
+	
+	public Usuario(String nome, int pontos){
+		this.nome = nome;
+		this.pontos = pontos;
+		this.moderador = false;
+	}
+	
 	public String getNome() {
 		return nome;
 	}
@@ -20,8 +31,8 @@ public class Usuario {
 	public boolean isModerador() {
 		return moderador;
 	}
-	public void setModerador(boolean moderador) {
-		this.moderador = moderador;
+	public void tornaModerador() {
+		this.moderador = true;
 	}
 	
 	
