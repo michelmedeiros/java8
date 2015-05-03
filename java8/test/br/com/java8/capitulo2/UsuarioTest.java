@@ -1,4 +1,4 @@
-package br.com.java8.capitulo1.tests;
+package br.com.java8.capitulo2;
 
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.any;
