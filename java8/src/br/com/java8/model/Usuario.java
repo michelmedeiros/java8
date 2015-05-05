@@ -35,6 +35,9 @@ public class Usuario {
 		this.moderador = true;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return this.nome;
+	}
 
 }

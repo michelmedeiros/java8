@@ -59,8 +59,6 @@ public class ValidadorTest {
 		System.out.println(o);
 		System.out.println(o.getClass());
 		assertThat("Classe esperada ValidadorTest", o.getClass(), is(not(instanceOf(Runnable.class))));
-		
-		
 	}
 
 }
