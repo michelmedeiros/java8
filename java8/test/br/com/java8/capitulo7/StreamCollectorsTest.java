@@ -6,10 +6,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 import org.junit.Test;
 
@@ -36,12 +37,56 @@ public class StreamCollectorsTest {
 	public void sucessoAoUtilizarStream() {
 		List<Usuario> usuarios = criarUsuarios();
 		// Todos usuários com mais de 100 pontos torna-se moderador
-		Stream<Usuario> stremUser =  usuarios.stream()
-		.filter(u -> u.getPontos() > 100);
-		stremUser.forEach(System.out :: println);
+		usuarios.stream().filter(u -> u.getPontos() > 100).forEach(Usuario::tornaModerador);
+		usuarios.stream().filter(Usuario :: isModerador);
+		
+		assertThat("Usuario com mais de 100 pontos", usuarios.get(0)
+				.getPontos(), is(136));
+		assertThat("Usuario com mais de 100 pontos", usuarios.get(0)
+				.isModerador(), is(equalTo(Boolean.TRUE)));
+
+	}
+
+	
+	@Test
+	public void sucessoAoUtilizarCollector() {
+		List<Usuario> usuarios = criarUsuarios();
+		// Todos usuários com mais de 100 pontos torna-se moderador
+		List<Usuario> usuariosMaioresQue100 =  usuarios.stream().filter(u -> u.getPontos() > 100).collect(Collectors.toList());
+		
+		assertThat("Usuario com mais de 100 pontos", usuariosMaioresQue100.get(0)
+				.getPontos(), is(136));
+		List<Integer> pontosUsuario = usuarios.stream().map(Usuario :: getPontos).collect(Collectors.toList());
+		assertThat("Pontos dos Usuarios", pontosUsuario.get(0), is(equalTo(136)));
+		
+		Integer minPontos = usuarios.stream().mapToInt(Usuario::getPontos).min().getAsInt();
+		assertThat("Menor Ponto dos Usuarios", minPontos, is(equalTo(11)));
+		
+		Integer maxPontos = usuarios.stream().mapToInt(Usuario::getPontos).max().getAsInt();
+		assertThat("Maior Ponto dos Usuarios", maxPontos, is(equalTo(199)));
+		
+		Double mediaPontos = usuarios.stream().mapToInt(Usuario::getPontos).average().orElse(0.0);
+		assertThat("Média dos pontos dos Usuarios", mediaPontos, is(equalTo(110.3)));
+		
+		Integer somaPontos = usuarios.stream().mapToInt(Usuario::getPontos).sum();
+		assertThat("Soma dos Pontos dos Usuarios", somaPontos, is(equalTo(1103)));
+		
+		Integer multiplicaPontos = usuarios.stream().mapToInt(Usuario::getPontos).reduce(1, (a,b) -> a * b);
+		assertThat("Multiplicação dos Pontos dos Usuarios", multiplicaPontos, is(equalTo(1614162432)));
+		
+		Integer subtraiPontos = usuarios.stream().mapToInt(Usuario::getPontos).reduce(1, (a,b) -> a - b);
+		assertThat("Soma dos Pontos dos Usuarios", subtraiPontos, is(equalTo(-1102)));
+		
+		Optional<String> maxNome = usuarios
+				.stream()
+				.max(Comparator.comparingInt(Usuario::getPontos))
+				.map(Usuario::getNome);
+		assertThat("Nome do maior pontuador", maxNome.get(), is(equalTo("Junior")));
+
 		
 	}
 
+	
 	private List<Usuario> criarUsuarios() {
 
 		BiFunction<String, Integer, Usuario> fabricaUsuarios = Usuario::new;
