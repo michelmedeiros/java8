@@ -91,18 +91,20 @@ public class GroupingTest {
 		Map<String, Usuario> mapUsuarios = usuarios.stream().collect(
 				Collectors.toMap(Usuario::getNome, Function.identity()));
 		System.out.println(usuarios);
-
+		assertThat("Numero de usuarios", mapUsuarios.keySet().size(), is(equalTo(10)));
+		
 		// Usuarios cuja chave os pontos para um conjunto de usuarios desses
 		// pontos
 		Map<Integer, List<Usuario>> pontosPorUsuarios = usuarios.stream()
 				.collect(Collectors.groupingBy(Usuario::getPontos));
 		System.out.println(pontosPorUsuarios);
+		assertThat("Numero de chaves por pontos", pontosPorUsuarios.keySet().size(), is(equalTo(8)));
 
 		// Usuarios divididos em moderadores ou não moderadores
 		Map<Boolean, List<Usuario>> moderadoresPorUsuarios = usuarios.stream()
 				.collect(Collectors.partitioningBy(Usuario::isModerador));
 		System.out.println(moderadoresPorUsuarios);
-
+		assertThat("Numero de usuários moderadores", moderadoresPorUsuarios.get(Boolean.TRUE).size(), is(equalTo(2)));
 		
 		// Usuarios divididos em moderadores ou não moderadores
 		Map<Boolean, List<String>> moderadoresPorNomeUsuarios = usuarios.stream()
@@ -110,12 +112,15 @@ public class GroupingTest {
 						Collectors.mapping(
 								Usuario::getNome, Collectors.toList())));
 		System.out.println(moderadoresPorNomeUsuarios);
+		assertThat("Numero de usuários não moderadores", moderadoresPorUsuarios.get(Boolean.FALSE).size(), is(equalTo(8)));
 		
 		// Usuarios divididos em moderadores somando seus pontos
 		Map<Boolean, Integer> moderadoresPorSomaPontosUsuarios = usuarios.stream()
 				.collect(Collectors.partitioningBy(Usuario::isModerador,
 						Collectors.summingInt(Usuario::getPontos)));
 		System.out.println(moderadoresPorSomaPontosUsuarios);
+		assertThat("Pontos de usuários moderadores", moderadoresPorSomaPontosUsuarios.get(Boolean.TRUE) , is(equalTo(169)));
+		assertThat("Pontos de usuários não moderadores", moderadoresPorSomaPontosUsuarios.get(Boolean.FALSE), is(equalTo(815)));
 		
 		String nomesConcatenados = usuarios.stream()
 				.map(Usuario :: getNome)
