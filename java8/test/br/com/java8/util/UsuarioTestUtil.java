@@ -13,16 +13,16 @@ public class UsuarioTestUtil {
 
 		BiFunction<String, Integer, Usuario> fabricaUsuarios = Usuario::new;
 
-		Usuario userMichel = fabricaUsuarios.apply("Michel", 136);
-		Usuario userGrace = fabricaUsuarios.apply("Grace", 33);
+		Usuario userMichel = new Usuario("Michel", 136, true);
+		Usuario userGrace = new Usuario("Grace", 33, true);
 		Usuario userAna = fabricaUsuarios.apply("Ana", 100);
 		Usuario userMaria = fabricaUsuarios.apply("Maria", 11);
 		Usuario userPaulo = fabricaUsuarios.apply("Paulo", 15);
 		Usuario userFatima = fabricaUsuarios.apply("Fatima", 177);
 		Usuario userJunior = fabricaUsuarios.apply("Junior", 199);
-		Usuario userPedro = fabricaUsuarios.apply("Pedro", 155);
+		Usuario userPedro = fabricaUsuarios.apply("Pedro", 136);
 		Usuario userJuliana = fabricaUsuarios.apply("Juliana", 144);
-		Usuario userJoana = fabricaUsuarios.apply("Joana", 133);
+		Usuario userJoana = fabricaUsuarios.apply("Joana", 33);
 		List<Usuario> usuarios = new ArrayList<Usuario>();
 		usuarios.add(userMichel);
 		usuarios.add(userGrace);
