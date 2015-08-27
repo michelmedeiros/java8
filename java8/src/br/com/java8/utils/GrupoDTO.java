@@ -1,25 +1,16 @@
-package br.com.java8.model;
+package br.com.java8.utils;
 
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-public class Grupo {
+import br.com.java8.model.Usuario;
 
+public class GrupoDTO {
 	
 	private Integer id;
 	private String descricao;
 	
 	private Set<Usuario> usuarios = new HashSet<Usuario>();
-	
-	public void addUsuariosGrupo(List<Usuario> usuariosGrupo){
-		this.usuarios.addAll(usuariosGrupo);
-	}
-	
-	public Set<Usuario> getUsuarios(){
-		return Collections.unmodifiableSet(this.usuarios);
-	}
 
 	public Integer getId() {
 		return id;
@@ -37,10 +28,14 @@ public class Grupo {
 		this.descricao = descricao;
 	}
 
+	public Set<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
 	public void setUsuarios(Set<Usuario> usuarios) {
 		this.usuarios = usuarios;
 	}
 	
 	
-	
+
 }

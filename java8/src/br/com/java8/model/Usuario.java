@@ -9,6 +9,8 @@ public class Usuario {
 	private String nome;
 	private int pontos;
 	private boolean moderador;
+	private Grupo grupo;
+	
 	
 	public Usuario(){
 		super();
@@ -48,6 +50,15 @@ public class Usuario {
 	public void tornaModerador() {
 		this.moderador = true;
 	}
+	
+	public void setGrupo(Grupo grupo) {
+		this.grupo = grupo;
+	}
+	
+	public Grupo getGrupo() {
+		return grupo;
+	}
+	
 	
 	@Override
 	public String toString() {
